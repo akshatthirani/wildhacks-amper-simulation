@@ -1,5 +1,6 @@
 var boolBegin = 0;
 var f = 0;
+var i=0;
 
 function buttonClicked(elem) {
 
@@ -7,12 +8,27 @@ function buttonClicked(elem) {
 	  //  alert(elem.id);
 	currentvalue = document.getElementById(elemID).innerHTML;
   
+  	i=1;	// 1 if device a light
+
+  	if(elemID == "l4")
+	  	{
+	  		i=2;
+	  	}
+  	else if (elemID == "l5") 
+  		{
+  			i=3;
+  		}
+  	else if (elemID == "l6") 
+  		{
+  			i=4;
+  		};
+
   	if(currentvalue == "Off"){
     	document.getElementById(elemID).innerHTML="On";
-    	f = f+1;	 
+    	f = f+i;	 
   	}else{
     	document.getElementById(elemID).innerHTML="Off";
-    	f = f-1;	
+    	f = f-i;	
   	}
 
   	buttonClicked2();

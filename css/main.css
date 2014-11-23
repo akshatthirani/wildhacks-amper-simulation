@@ -44,3 +44,13 @@ body{
 
     margin: 90px;
 }
+
+.footer{
+    background-color: gray;
+    height: 100px;
+}
+
+h3.footerText{
+    color: white;
+    text-align: center;;
+}

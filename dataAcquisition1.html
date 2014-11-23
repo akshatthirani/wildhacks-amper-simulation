@@ -6,7 +6,7 @@
 <head>
 
 	<meta charset="UTF-8">
-	<title>ampeR by Akshat Thirani</title>
+    <title>amper by Akshat Thirani</title>
 
 	<link rel="stylesheet" type="text/css" href="css/dataAcquisitionCSS.css">
 	<script src="js/dataAcquisitionJS.js"></script>
@@ -28,50 +28,162 @@
 
 	<!-- ___________________________________________________________________________ -->
 
-	<script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js">
+	<script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js">	</script>
 
-	</script>
+	<script type='text/javascript' src='http://d3js.org/d3.v3.min.js'></script>
 
-
-
+	<script type='text/javascript' src='https://cdn.firebase.com/v0/firebase.js'></script>
+	<script type='text/javascript' src='D3Fire/d3fire.min.js'></script>
 
 </head>
 
 <body>
 
 <div class="heading">
-	<h1>ampeR</h1>
-</div>
-
-<div class="anyLabel">
-	<p>Click <a href="d3trial.html" target="_blank">here</a> to check out some visualizations on D3.js</p>
+	<h1>ampér</h1>
 </div>
 
 <div class="deviceList">
-		
+   <div class="row">
 	<!-- Light 1: -->	
-	<div class="device">
-		
-		<h3>Light 1:</h3>
+	<div class="col-md-1 deviceLabel">
+		<p>Light 1:</p>
 		<button type="button" class="btn btn-primary btn-lg" onclick="buttonClicked(this)" id="l1">Off</button>		
 	</div>
 
 	<!-- Light 2: -->	
-	<div class="device">
-
-		<h3>Light 2:</h3>		
+	<div class="col-md-1">
+		<p>Light 2:</p>
 		<button type="button" class="btn btn-primary btn-lg" onclick="buttonClicked(this)" id="l2">Off</button>	
-
 	</div>
 
 	<!-- Light 3: -->	
-	<div class="device">
-		
-		<h3>Light 3:</h3>
+	<div class="col-md-1">		
+		<p>Light 3:</p>
 		<button type="button" class="btn btn-primary btn-lg" onclick="buttonClicked(this)" id="l3">Off</button>	
-
 	</div>
 
+	<!-- Audio: -->	
+	<div class="col-md-1">		
+		<p>Audio:</p>
+		<button type="button" class="btn btn-primary btn-lg" onclick="buttonClicked(this)" id="l4">Off</button>	
+	</div>
+
+	<!-- TV -->	
+	<div class="col-md-1">		
+		<p>TV:</p>
+		<button type="button" class="btn btn-primary btn-lg" onclick="buttonClicked(this)" id="l5">Off</button>	
+	</div>
+
+	<!-- Microwave -->	
+	<div class="col-md-1">		
+		<p>Microwave:</p>
+		<button type="button" class="btn btn-primary btn-lg" onclick="buttonClicked(this)" id="l6">Off</button>	
+	</div>
+
+	<div class="col-md-1">		
+	</div>
+
+	<div class="col-md-1">
+		<p>Current Value:</p>
+		<h3 id="currentVal"></h3>
+	</div>
+
+  </div>
+</div>
+
+	<!-- __________________________________________________________________ -->	
+
+<div class="graph">
+	
+<script>
+
+// ________________________________________________
+var n = 40,
+    random = d3.random.normal(0, .2),
+    data = d3.range(n).map(random);
+
+var margin = {top: 20, right: 20, bottom: 20, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var x = d3.scale.linear()
+    .domain([0, n - 1])
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .domain([-1, 14])
+    .range([height, 0]);
+
+var line = d3.svg.line()
+    .x(function(d, i) { return x(i); })
+    .y(function(d, i) { return y(d); });
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + y(0) + ")")
+    .call(d3.svg.axis().scale(x).orient("bottom"));
+
+svg.append("g")
+    .attr("class", "y axis")
+    .call(d3.svg.axis().scale(y).orient("left"));
+
+var path = svg.append("g")
+    .attr("clip-path", "url(#clip)")
+  .append("path")
+    .datum(data)
+    .attr("class", "line")
+    .attr("d", line);
+
+tick();
+
+function tick() {
+
+	var current;
+
+	var fb = new Firebase("https://amper.firebaseio.com/");
+
+	fb.on("value", function(data) {
+  		current = data.val().currentUsage;
+  		//alert(current);
+  				console.log(current);
+
+		});
+
+	document.getElementById("currentVal").innerHTML = current;
+
+  // push a new data point onto the back
+  
+  data.push(current);
+
+  // redraw the line, and slide it to the left
+  path
+      .attr("d", line)
+      .attr("transform", null)
+    .transition()
+      .duration(500)
+      .ease("linear")
+      .attr("transform", "translate(" + x(-1) + ",0)")
+      .each("end", tick);
+
+  // pop the old data point off the front
+  data.shift();
+
+}
+
+</script>
 </div>
 	
 </body>

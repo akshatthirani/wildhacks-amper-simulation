@@ -1,23 +1,27 @@
 
 .heading{
-    margin-left: 100px;
+    margin-left: 50px;
     margin-right: auto;
 }
 
 .device{
-    padding-top: 20px;
+    padding-top: 10px;
     padding-left: 20px;
 
 }
 
 .anyLabel{
     padding-top: 20px;
-    padding-left: 20px;
+    padding-left: 50px;
 }
 
+.deviceLabel{
+    position: center;
+}
 .deviceList{
-    margin-left: 20px;
-    padding-left: 50px;
+    padding-top: 20px;
+    margin-left: 25px;
+    padding-left: 20px;
 }
 
 .onoffswitch {
@@ -66,3 +70,22 @@
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px; 
 }
+
+.graph{
+    padding-top: 20px;
+    padding-left: 30px;
+}
+
+
+    .line {
+          fill: none;
+          stroke: #000;
+          stroke-width: 1.5px;
+        }
+
+        .axis path,
+        .axis line {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+        }
