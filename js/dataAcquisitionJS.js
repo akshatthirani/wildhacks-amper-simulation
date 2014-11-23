@@ -19,19 +19,20 @@ function buttonClicked(elem) {
   	boolBegin = 1;
 };
 
+
+
 function buttonClicked2() {
 	var myFirebaseRef = new Firebase("https://amper.firebaseio.com/");
-
-
-	if(boolBegin == 0)
+	
+	if(boolBegin == 1)
+	{
 		myFirebaseRef.set({
-		  "currentUsage": f,
-		});
-	else
+			"currentUsage": f
+		})
+	}else
 	{
 		myFirebaseRef.push({
 			"currentUsage": f
 		})
 	}
-
 };

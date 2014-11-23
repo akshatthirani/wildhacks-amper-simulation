@@ -10,9 +10,14 @@
 
 }
 
+.anyLabel{
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
 .deviceList{
     margin-left: 20px;
-    padding: 10px;
+    padding-left: 50px;
 }
 
 .onoffswitch {
